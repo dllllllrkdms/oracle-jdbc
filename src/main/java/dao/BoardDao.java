@@ -5,15 +5,16 @@ import java.util.ArrayList;
 import oracle.jdbc.proxy.annotation.Pre;
 import vo.Board;
 public class BoardDao { // 서비스에서 예외처리를 하기 위해 dao에서는 throws
-	public ArrayList<Board> selectBoardListByPage(Connection conn, int beginRow, int endRow) throws Exception { // boardList 출력
+	public ArrayList<Board> selectBoardListByPage(Connection conn, String search, int beginRow, int endRow) throws Exception { // boardList 출력
 		// !!!!!!!!!!!!!!!!!!!!검색기능 추가하기!!!!!!!!!!!!!!!!!!!!!
 		ArrayList<Board> list = new ArrayList<Board>();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT board_no boardNo, board_title boardTitle, member_id memberId, createdate FROM (SELECT rownum rnum, board_no, board_title, member_id, createdate FROM (SELECT board_no, board_title, member_id, createdate FROM board ORDER BY board_no DESC) t) t2 WHERE rnum BETWEEN ? AND ?";
+		String sql = "SELECT board_no boardNo, board_title boardTitle, member_id memberId, createdate FROM (SELECT rownum rnum, board_no, board_title, member_id, createdate FROM (SELECT board_no, board_title, member_id, createdate FROM board WHERE board_title LIKE ? ORDER BY board_no DESC) t) t2 WHERE rnum BETWEEN ? AND ?";
 		stmt = conn.prepareStatement(sql);
-		stmt.setInt(1, beginRow);
-		stmt.setInt(2, endRow);
+		stmt.setString(1, "%"+search+"%");
+		stmt.setInt(2, beginRow);
+		stmt.setInt(3, endRow);
 		rs = stmt.executeQuery();
 		while(rs.next()) {
 			Board b = new Board();

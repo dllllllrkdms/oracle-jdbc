@@ -38,9 +38,13 @@ public class LoginController extends HttpServlet {
 		String memberId = request.getParameter("memberId");
 		String memberPw = request.getParameter("memberPw");
 		
-		// 파라메타값 유효성검사 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// 파라메타값 유효성검사
+		if(memberId==null||memberId.equals("")||memberPw==null||memberPw.equals("")) {
+			response.sendRedirect(request.getContextPath()+"/member/login");
+			return;
+		}
 	
-		System.out.println(memberId+"<--/LoginController memberId");
+		System.out.println(memberId+"<--/LoginController memberId"); // 파라메타값 디버깅
 		
 		Member member = new Member();
 		member.setMemberId(memberId);
@@ -48,7 +52,7 @@ public class LoginController extends HttpServlet {
 		
 		MemberService memberService = new MemberService();
 		loginMember = memberService.login(member);
-		System.out.println(loginMember.getMemberId()+"<--/LoginController loginMember.getMemberId()");
+		System.out.println(loginMember.getMemberId()+"<--/LoginController loginMember.getMemberId()"); // 모델호출 후 디버깅
 		String redirectUrl = "/member/login";
 		if(loginMember!=null) { // loginMember가 null이면 로그인 실패 
 			redirectUrl = "/home";
