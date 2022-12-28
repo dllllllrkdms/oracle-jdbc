@@ -12,14 +12,26 @@ import javax.servlet.http.HttpSession;
 import service.MemberService;
 import vo.Member;
 
-@WebServlet("/LoginActionController")
-public class LoginActionController extends HttpServlet {
+@WebServlet("/member/login")
+public class LoginController extends HttpServlet {
+	// 로그인 폼
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 로그인 전에만 진입 가능 -> 세션검사
+		HttpSession session = request.getSession();
+		Member loginMember = (Member)session.getAttribute("loginMember"); // Object -> Member 형변환
+		if(loginMember!=null) {
+			response.sendRedirect(request.getContextPath()+"/home");
+			return;
+		}
+		request.getRequestDispatcher("/WEB-INF/view/member/login.jsp").forward(request, response);
+	}
+	// 로그인 액션
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 로그인 전에만 진입 가능 -> 세션검사
 		HttpSession session = request.getSession();
 		Member loginMember = (Member)session.getAttribute("loginMember"); // Object -> Member 형변환
 		if(loginMember!=null) {
-			response.sendRedirect(request.getContextPath()+"/HomeController");
+			response.sendRedirect(request.getContextPath()+"/home");
 			return;
 		}
 		
@@ -28,7 +40,7 @@ public class LoginActionController extends HttpServlet {
 		
 		// 파라메타값 유효성검사 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	
-		System.out.println(memberId+"<--/LoginActionController memberId");
+		System.out.println(memberId+"<--/LoginController memberId");
 		
 		Member member = new Member();
 		member.setMemberId(memberId);
@@ -36,10 +48,10 @@ public class LoginActionController extends HttpServlet {
 		
 		MemberService memberService = new MemberService();
 		loginMember = memberService.login(member);
-		System.out.println(loginMember+"<--/LoginActionController loginMember");
-		String redirectUrl = "/LoginFormController";
+		System.out.println(loginMember.getMemberId()+"<--/LoginController loginMember.getMemberId()");
+		String redirectUrl = "/member/login";
 		if(loginMember!=null) { // loginMember가 null이면 로그인 실패 
-			redirectUrl = "/HomeController";
+			redirectUrl = "/home";
 		}
 		session.setAttribute("loginMember", loginMember);
 

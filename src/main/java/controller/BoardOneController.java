@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import service.BoardService;
 import vo.Board;
 
-@WebServlet("/BoardOneController")
+@WebServlet("/board/boardOne")
 public class BoardOneController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("boardNo")==null) { // 파라메타 값 유효성 검사
-			response.sendRedirect(request.getContextPath()+"/BoardListController");
+			response.sendRedirect(request.getContextPath()+"/board/boardList");
 			return;
 		}
 		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
@@ -24,6 +24,6 @@ public class BoardOneController extends HttpServlet {
 		Board board = boardService.getBoardOne(boardNo);
 		
 		request.setAttribute("b", board); // view페이지와 공유할 모델데이터(board) 저장
-		request.getRequestDispatcher("/WEB-INF/view/boardOne.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/board/boardOne.jsp").forward(request, response);
 	}
 }

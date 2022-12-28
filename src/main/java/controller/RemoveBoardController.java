@@ -11,14 +11,14 @@ import javax.servlet.http.HttpSession;
 import service.BoardService;
 import vo.Member;
 
-@WebServlet("/RemoveBoardController")
+@WebServlet("/board/removeBoard")
 public class RemoveBoardController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 로그인 후 글 삭제 가능
 		HttpSession session = request.getSession(); // 세션 값 가져오기
 		Member loginMember = (Member)session.getAttribute("loginMember"); // Object -> Member 형변환
 		if(loginMember==null) {
-			response.sendRedirect(request.getContextPath()+"/LoginFormController");
+			response.sendRedirect(request.getContextPath()+"/member/login");
 			return;
 		}
 		
@@ -29,6 +29,6 @@ public class RemoveBoardController extends HttpServlet {
 		BoardService boardService = new BoardService();
 		int row = boardService.removeBoard(boardNo);
 		System.out.println(row+"<--/RemoveBoardController row");
-		response.sendRedirect(request.getContextPath()+"/BoardListController");
+		response.sendRedirect(request.getContextPath()+"/board/boardList");
 	}
 }

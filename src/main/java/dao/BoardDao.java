@@ -10,7 +10,7 @@ public class BoardDao { // 서비스에서 예외처리를 하기 위해 dao에�
 		ArrayList<Board> list = new ArrayList<Board>();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT board_no boardNo, board_title boardTitle, createdate FROM (SELECT rownum rnum, board_no, board_title, createdate FROM (SELECT board_no, board_title, createdate FROM board ORDER BY board_no DESC) t) t2 WHERE rnum BETWEEN ? AND ?";
+		String sql = "SELECT board_no boardNo, board_title boardTitle, member_id memberId, createdate FROM (SELECT rownum rnum, board_no, board_title, member_id, createdate FROM (SELECT board_no, board_title, member_id, createdate FROM board ORDER BY board_no DESC) t) t2 WHERE rnum BETWEEN ? AND ?";
 		stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, beginRow);
 		stmt.setInt(2, endRow);
@@ -19,6 +19,7 @@ public class BoardDao { // 서비스에서 예외처리를 하기 위해 dao에�
 			Board b = new Board();
 			b.setBoardNo(rs.getInt("boardNo"));
 			b.setBoardTitle(rs.getString("boardTitle"));
+			b.setMemberId(rs.getString("memberId"));
 			b.setCreatedate(rs.getString("createdate"));
 			list.add(b);
 		}
@@ -56,10 +57,11 @@ public class BoardDao { // 서비스에서 예외처리를 하기 위해 dao에�
 	public int updateBoard(Connection conn, Board board) throws SQLException {
 		int row = 0;
 		PreparedStatement stmt = null;
-		String sql = "UPDATE board SET(board_title=?, board_content=?, updatedate=sysdate)";
+		String sql = "UPDATE board SET board_title=?, board_content=?, updatedate=sysdate WHERE board_no=?";
 		stmt = conn.prepareStatement(sql);
 		stmt.setString(1, board.getBoardTitle());
 		stmt.setString(2, board.getBoardContent());
+		stmt.setInt(3, board.getBoardNo());
 		row = stmt.executeUpdate();
 		stmt.close();
 		return row;

@@ -6,8 +6,10 @@
 <title>home</title>
 </head>
 <body>
-	${loginMember.memberName}님 환영합니다.
-	<a href="${pageContext.request.contextPath}/BoardListController">게시판</a>
-	<a href="${pageContext.request.contextPath}/LogoutController">로그아웃</a>
+	<!-- user -->
+	<jsp:include page="../inc/userMenu.jsp"></jsp:include>
+	<a href="${pageContext.request.contextPath}/board/boardList">게시판</a>
+	
+	
 </body>
 </html>

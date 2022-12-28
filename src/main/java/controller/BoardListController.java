@@ -12,10 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import service.BoardService;
 import vo.Board;
 
-/**
- * Servlet implementation class BoardListController
- */
-@WebServlet("/BoardListController")
+@WebServlet("/board/boardList") // view파일과 호출이름 통일시키기
 public class BoardListController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int currentPage = 1;
@@ -34,7 +31,7 @@ public class BoardListController extends HttpServlet {
 		request.setAttribute("currentPage", currentPage);
 		request.setAttribute("rowPerPage", rowPerPage);
 		
-		request.getRequestDispatcher("/WEB-INF/view/boardList.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/board/boardList.jsp").forward(request, response);
+		return;
 	}
-
 }
