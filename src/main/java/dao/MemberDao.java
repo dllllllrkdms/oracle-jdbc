@@ -50,6 +50,21 @@ public class MemberDao {
 		stmt.close();
 		return row;
 	}
+	public boolean selectId(Connection conn, String memberId) throws SQLException { // 아이디 중복확인
+		boolean result = true;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT member_id memberId FROM member WHERE member_id=?";
+		stmt = conn.prepareStatement(sql);
+		stmt.setString(1, memberId);
+		rs = stmt.executeQuery();
+		if(rs.next()) { // 중복시에 false 반환
+			result = false;
+		}
+		rs.close();
+		stmt.close();
+		return result;
+	}
 	public int updateMember(Connection conn, Member member) throws SQLException { // 회원정보 수정
 		int row = 0;
 		PreparedStatement stmt = null;

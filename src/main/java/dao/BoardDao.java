@@ -6,11 +6,11 @@ import oracle.jdbc.proxy.annotation.Pre;
 import vo.Board;
 public class BoardDao { // 서비스에서 예외처리를 하기 위해 dao에서는 throws
 	public ArrayList<Board> selectBoardListByPage(Connection conn, String search, int beginRow, int endRow) throws Exception { // boardList 출력
-		// !!!!!!!!!!!!!!!!!!!!검색기능 추가하기!!!!!!!!!!!!!!!!!!!!!
+		// !!!!!!!!!!!!!!!!!!! sort 기능 추가하기!!!!!!!!!!!!!!!!!!!!!
 		ArrayList<Board> list = new ArrayList<Board>();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT board_no boardNo, board_title boardTitle, member_id memberId, createdate FROM (SELECT rownum rnum, board_no, board_title, member_id, createdate FROM (SELECT board_no, board_title, member_id, createdate FROM board WHERE board_title LIKE ? ORDER BY board_no DESC) t) t2 WHERE rnum BETWEEN ? AND ?";
+		String sql = "SELECT board_no boardNo, board_title boardTitle, member_id memberId, createdate FROM (SELECT rownum rnum, board_no, board_title, member_id, createdate FROM (SELECT board_no, board_title, member_id, createdate FROM board WHERE board_title LIKE ? ORDER BY createdate DESC) t) t2 WHERE rnum BETWEEN ? AND ?";
 		stmt = conn.prepareStatement(sql);
 		stmt.setString(1, "%"+search+"%");
 		stmt.setInt(2, beginRow);
@@ -27,6 +27,19 @@ public class BoardDao { // 서비스에서 예외처리를 하기 위해 dao에�
 		rs.close();
 		stmt.close();
 		return list;
+	}
+	public int selectBoardCount(Connection conn, String search) throws SQLException { // 게시글 수 
+		int count = 0;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT count(*) count FROM (SELECT board_no, board_title, member_id, createdate FROM board WHERE board_title LIKE ? ORDER BY board_no DESC) t";
+		stmt = conn.prepareStatement(sql);
+		stmt.setString(1, "%"+search+"%");
+		rs = stmt.executeQuery();
+		if(rs.next()) {
+			count = rs.getInt("count");
+		}
+		return count;
 	}
 	public Board selectBoardOne(Connection conn, int boardNo) throws SQLException { // board 상세보기
 		Board board = null;

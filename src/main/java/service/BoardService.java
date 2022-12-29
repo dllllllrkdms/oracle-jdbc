@@ -38,6 +38,37 @@ public class BoardService {
 		}
 		return list;
 	}
+	public int getBoardListLastPage(String search, int rowPerPage) { // 마지막 페이지 구하기 
+		int lastPage = 0;
+		Connection conn = null;
+		try {
+			System.out.println(search);
+			// 페이징
+			conn = DBUtil.getConnection(); // db연결
+			this.boardDao = new BoardDao();
+			int count = boardDao.selectBoardCount(conn, search);
+			System.out.println(count);
+			lastPage = count/rowPerPage;
+			if(count%rowPerPage!=0) {
+				lastPage+=1;
+			}
+			conn.commit(); // DBUtil.class에서 conn.setAutoCommit(false) 설정
+		} catch (Exception e) {
+			try {
+				conn.rollback(); // 예외 발생 시 rollback
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close(); // db자원 반납
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return lastPage;
+	}
 	public Board getBoardOne(int boardNo) { // boardOne 상세보기
 		Board board = null;
 		Connection conn = null;

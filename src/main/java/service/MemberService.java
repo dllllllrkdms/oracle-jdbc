@@ -57,6 +57,30 @@ public class MemberService {
 		}
 		return member;
 	}
+	public boolean checkIdDuplication(String memberId) { // 아이디 중복확인
+		boolean idDup = false; 
+		Connection conn = null;
+		try {
+			conn = DBUtil.getConnection();
+			this.memberDao = new MemberDao();
+			idDup = memberDao.selectId(conn, memberId);
+			conn.commit();
+		} catch (Exception e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return idDup;
+	}
 	public int addMember(Member member) { // 회원가입
 		int row = 0;
 		Connection conn = null;

@@ -30,7 +30,6 @@ public class AddMemberController extends HttpServlet {
 	}
 	// 회원 가입 액션
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("아아");
 		// 로그인 세션검사
 		HttpSession session = request.getSession(); // 세션 값 가져오기
 		Member loginMember = (Member)session.getAttribute("loginMember"); // Object -> Member 형변환
@@ -47,8 +46,18 @@ public class AddMemberController extends HttpServlet {
 		
 		System.out.println(memberId+"<--/AddMemberController memberId");
 		
-		Member member = new Member(memberId, memberPw, memberName, null, null);
+		Member member = new Member(memberId, memberPw, memberName, null, null); // request 파라미터값으로 바인딩
+		
 		MemberService memberService = new MemberService();
+		boolean result = memberService.checkIdDuplication(memberId); // 아이디 중복확인
+		System.out.println(result+"<--IdDuplication result");
+		request.setAttribute("m", member);
+		request.setAttribute("idDupResult", result);
+		if(!result) { // 중복이라면 false를 반환
+			doGet(request, response);
+			return;
+		}
+	
 		int row = memberService.addMember(member);
 		System.out.println(row+"<--AddMemberController row");
 		response.sendRedirect(request.getContextPath()+"/member/login");

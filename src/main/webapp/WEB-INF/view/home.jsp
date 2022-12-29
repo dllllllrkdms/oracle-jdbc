@@ -3,6 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
 <link rel="stylesheet" href="https://bootstrapmade.com/assets/css/demo-4.2.css">
 <link href="${pageContext.request.contextPath}/resources/img/favicon.png" rel="icon">
 <link href="https://fonts.gstatic.com" rel="preconnect">

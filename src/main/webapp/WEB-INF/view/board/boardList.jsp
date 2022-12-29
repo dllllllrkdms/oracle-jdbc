@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
 <link rel="stylesheet" href="https://bootstrapmade.com/assets/css/demo-4.2.css">
 <link href="${pageContext.request.contextPath}/resources/img/favicon.png" rel="icon">
 <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -19,12 +20,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <title>boardList</title>
 <script>
-	// 20 -> 10 -> 20 되는 이유찾기...
 	$(document).ready(function(){
-		$(`#rowPerPage option[value=${rowPerPage}]`).prop('selected', 'selected');
 		$('#rowPerPage').change(function(){
-			let rowPerPage = $("#rowPerPage option:selected").val();
-			console.log(rowPerPage);
 			$('#pageForm').submit();
 		});
 	});
@@ -47,16 +44,21 @@
 									<div class="dataTable-dropdown">
 										<form action="${pageContext.request.contextPath}/board/boardList" id="pageForm">
 											<select class="dataTable-selector" name="rowPerPage" id="rowPerPage">
-												<option value="10">10개씩</option>
-												<option value="20">20개씩</option>
-												<option value="30">30개씩</option>
+												<c:forEach var="v" begin="10" end="30" step="10">
+													<c:if test="${rowPerPage eq v}">
+														<option value="${v}" selected="selected">${v}개씩</option>
+													</c:if>
+													<c:if test="${rowPerPage ne v}">
+														<option value="${v}">${v}개씩</option>
+													</c:if>
+												</c:forEach>
 											</select>
 										</form>
 									</div>
 									<!-- 검색창 -->
-									<div class="dataTable-search">
+									<div class="search-bar">
 										<form action="${pageContext.request.contextPath}/board/boardList" class="search-form d-flex align-items-center">
-											<input class="dataTable-input" placeholder="Search..." type="text" name="search" title="Enter search keyword">
+											<input class="dataTable-input" placeholder="제목 검색" type="text" name="search" title="Enter search keyword" value="${search}">
 											<button type="submit" title="Search"><i class="bi bi-search"></i></button>
 										</form>
 									</div>
@@ -69,25 +71,30 @@
 											<th scope="col" data-sortable="" style="width: 9.25926%;">
 												<a href="#" class="dataTable-sorter">#</a>
 											</th>
-											<th scope="col" data-sortable="" style="width: 40.2346%;">
+											<th scope="col" data-sortable="" style="width: 30.2346%;">
 												<a href="#" class="dataTable-sorter">제목</a>
+											</th>
+											<th scope="col" data-sortable="" style="width: 20.9383%;">
+												<a href="#" class="dataTable-sorter">작성자</a>
 											</th>
 											<th scope="col" data-sortable="" style="width: 20.9383%;">
 												<a href="#" class="dataTable-sorter">작성일</a>
 											</th>
-											<th scope="col" data-sortable="" style="width: 15.4321%;">
+											<th scope="col" data-sortable="" style="width: 10.4321%;">
 												<a href="#" class="dataTable-sorter">수정</a>
 											</th>
-											<th scope="col" data-sortable="" style="width: 15.1358%;">
+											<th scope="col" data-sortable="" style="width: 10.1358%;">
 												<a href="#" class="dataTable-sorter">삭제</a>
 											</th>
 										</tr>
 									</thead>
+									<!-- boardList 출력 -->
 									<tbody>
 										<c:forEach var="b" items="${boardList}">
 											<tr>
 												<th>${b.boardNo}</th>
 												<td><a href="${pageContext.request.contextPath}/board/boardOne?boardNo=${b.boardNo}">${b.boardTitle}</a></td>
+												<td>${b.memberId}</td>
 												<td>${b.createdate}</td>
 												<c:if test="${b.memberId eq loginMember.memberId}"> <!-- eq : jstl 문자열비교(같으면 true) -->
 													<td><a href="${pageContext.request.contextPath}/board/modifyBoard?boardNo=${b.boardNo}">수정</a></td>
@@ -102,16 +109,32 @@
 									</tbody>
 								</table>
 							</div>
-							<div class="dataTable-bottom">
-								<div class="dataTable-info">Showing 1 to 5 of 5 entries</div>
-								<nav class="dataTable-pagination">
-									<ul class="dataTable-pagination-list">
-										<li class="page-item">
-											<a href="${pageContext.request.contextPath}/board/boardList?currentPage=${currentPage-1}">이전</a>
-										</li>
-										<li class="page-item">
-											<a href="${pageContext.request.contextPath}/board/boardList?currentPage=${currentPage+1}">다음</a>
-										</li>
+							<!-- 페이징 -->
+							<div class="mt-4">
+								<nav class="page">
+									<ul class="pagination justify-content-center">
+										<c:if test="${beginPage>1}">
+											<li class="page-item">
+												<a class="page-link" href="${pageContext.request.contextPath}/board/boardList?currentPage=${beginPage-1}&search=${search}"><i class="bi bi-chevron-double-left"></i></a>
+											</li>
+										</c:if>
+										<c:forEach var="p" begin="${beginPage}" end="${endPage}" step="1">
+											<c:if test="${p eq currentPage}">
+												<li class="page-item active">
+													<a class="page-link" href="${pageContext.request.contextPath}/board/boardList?currentPage=${p}&search=${search}">${p}</a>
+												</li>
+											</c:if>
+											<c:if test="${p ne currentPage}">
+												<li class="page-item">
+													<a class="page-link" href="${pageContext.request.contextPath}/board/boardList?currentPage=${p}&search=${search}">${p}</a>
+												</li>
+											</c:if>
+										</c:forEach>
+										<c:if test="${endPage<lastPage}">
+											<li class="page-item">
+												<a class="page-link" href="${pageContext.request.contextPath}/board/boardList?currentPage=${beginPage+10}&search=${search}"><i class="bi bi-chevron-double-right"></i></a>
+											</li>
+										</c:if>
 									</ul>
 								</nav>
 							</div>
@@ -126,7 +149,7 @@
 		<div class="copyright"> © Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved</div>
 		<div class="credits"> Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a></div>
 	</footer>
-	
+	<a href="#" class="back-to-top d-flex align-items-center justify-content-center active"><i class="bi bi-arrow-up-short"></i></a>
 	
 <script src="${pageContext.request.contextPath}/resources/vendor/apexcharts/apexcharts.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
