@@ -16,21 +16,16 @@
 <link href="${pageContext.request.contextPath}/resources/vendor/simple-datatables/style.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<title>modifyBoard</title>
+<title>profile</title>
 <script>
 	$(document).ready(function(){
 		$('#submitBtn').click(function(){
-			if($('#boardTitle').val().length==0){
-				alert('제목을 입력해주세요.');
-				$('#boardTitle').focus();
+			if($('#memberName').val().length==0){
+				alert('이름을 입력해주세요.');
+				$('#memberName').focus();
 				return;
 			}
-			if($('#boardContent').val().length==0){
-				alert('내용을 입력해주세요.');
-				$('#boardContent').focus();
-				return;
-			}
-			$('#modifyBoardForm').submit();
+			$('#modifyMemberForm').submit();
 		});
 	});
 </script>
@@ -39,33 +34,82 @@
 	<!-- header -->
 	<jsp:include page="../../inc/userMenu.jsp"></jsp:include>
 	<main id="main" class="main">
-		<section class="section">
+		<section class="section profile">
 			<div class="pagetitle">
-				<h1>게시판</h1>
+				<h1>Profile</h1>
+				<nav>
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item">
+							<a href="${pageContext.request.contextPath}/home">Home</a>
+						</li>
+						<li class="breadcrumb-item">
+							내 정보
+						</li>
+					</ol>
+				</nav>
 			</div>
 			<div class="row">
-				<div class="col-lg-12">
+				<div class="col-xl-12">
 					<div class="card">
-						<div class="card-body px-lg-5">
-	
-							<form action="${pageContext.request.contextPath}/board/modifyBoard" method="post" id="modifyBoardForm">
-								<input type="hidden" name="boardNo" value="${b.boardNo}">
-								<input type="hidden" name="memberId" value="${b.memberId}">
-								<div class="pt-lg-5 pb-2 pb-2">
-									<input placeholder="제목" class="form-control" type="text" name="boardTitle" value="${b.boardTitle}" id="boardTitle">
-								</div>
-								<div class="pt-2 pb-2">
-									<textarea placeholder="내용" class="form-control" cols="50" rows="5" name="boardContent" id="boardContent">${b.boardContent}</textarea>
-								</div>
-								<div class="card-footer">
-									<div class="mt-3 mb-3">
-										${b.memberId} &nbsp; ${b.createdate}
+						<div class="card-body pt-3">
+							<ul class="nav nav-tabs nav-tabs-bordered" role="tablist">
+								<li class="nav-items" role="presentation">
+									<button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview" aria-selected="true" role="tab" tabindex="-1">
+										OverView
+									</button>
+								</li>
+								<li class="nav-items" role="presentation">
+									<button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit" aria-selected="false" role="tab" tabindex="-1">
+										Edit Profile
+									</button>
+								</li>
+								<li class="nav-items" role="presentation">
+									<button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password" aria-selected="false" role="tab" tabindex="-1">
+										Change Password
+									</button>
+								</li>
+							</ul>
+							<div class="tab-content pt-2">
+								<div class="tab-pane fade profile-overview show active" id="profile-overview" role="tabpanel">
+									<h5 class="card-title">Profile Detailes</h5>
+									<div class="row">
+										<div class="col-lg-3 col-md-4 label">이름</div>
+										<div class="col-lg-9 col-md-8">${m.memberName}</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-3 col-md-4 label">아이디</div>
+										<div class="col-lg-9 col-md-8">${m.memberId}</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-3 col-md-4 label">가입일</div>
+										<div class="col-lg-9 col-md-8">${m.createdate}</div>
 									</div>
 								</div>
-								<div class="text-center mt-3">
-									<button type="button" class="btn btn-primary" id="submitBtn">등록</button>
-								</div>
-							</form>
+							</div>
+							<div class="tab-pane fade profile-overview" id="profile-edit" role="tabpanel">
+								<form action="${pageContext.request.contextPath}/member/modifyMember" method="post" id="modifyMemberForm">
+									<div class="row mb-3">
+										<label for="memberName" class="col-md-4 col-lg-3 col-form-label">Name</label>
+										<div class="col-md-8 col-lg-9">
+											<input type="text" class="form-control" id="memberName" name="memberName" value="${m.memberName}">
+										</div>
+									</div>
+									<div class="row mb-3">
+										<label for="memberId" class="col-md-4 col-lg-3 col-form-label">ID</label>
+										<div class="col-md-8 col-lg-9">
+											<input type="text" class="form-control" id="memberId" name="memberId" value="${m.memberId}" readonly="readonly">
+										</div>
+									</div>
+									<div class="text-center">
+										<button type="button" class="btn btn-primary" id="submitBtn">수정</button>
+									</div>
+								</form>
+							</div>
+							
+							<!-- 비밀번호 변경 -->
+							<div class="tab-pane fade profile-overview" id="profile-overview" role="tabpanel">
+							</div>
+							
 						</div>
 					</div>
 				</div>

@@ -15,6 +15,7 @@ import vo.Board;
 @WebServlet("/board/boardList") // view파일과 호출이름 통일시키기
 public class BoardListController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String memberId = request.getParameter("memberId");
 		int currentPage = 1;
 		if(request.getParameter("currentPage")!=null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -36,15 +37,16 @@ public class BoardListController extends HttpServlet {
 		System.out.println(search+"<--BoardListController search");
 		
 		BoardService boardService = new BoardService();
-		ArrayList<Board> list = boardService.getBoardListByPage(search, currentPage, rowPerPage);
+		ArrayList<Board> list = boardService.getBoardListByPage(memberId, search, currentPage, rowPerPage);
 		
 		boardService = new BoardService();
-		int lastPage = boardService.getBoardListLastPage(search, rowPerPage);
+		int lastPage = boardService.getBoardListLastPage(memberId, search, rowPerPage);
 		if(lastPage<endPage) {
 			endPage = lastPage;
 		}
 		System.out.println(lastPage+"<--BoardListController lastPage");
 		
+		request.setAttribute("memberId", memberId);
 		request.setAttribute("boardList", list);
 		request.setAttribute("search", search);
 		request.setAttribute("beginPage", beginPage);

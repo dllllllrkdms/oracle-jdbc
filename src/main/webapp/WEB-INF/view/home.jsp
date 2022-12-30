@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%><!-- Core JSTL 사용 -->
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<link rel="stylesheet" href="https://bootstrapmade.com/assets/css/demo-4.2.css">
 <link href="${pageContext.request.contextPath}/resources/img/favicon.png" rel="icon">
 <link href="https://fonts.gstatic.com" rel="preconnect">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -20,13 +20,34 @@
 <title>home</title>
 </head>
 <body>
-	<main>
-		
-	</main>
-	<!-- user -->
+	<!-- header -->
 	<jsp:include page="../inc/userMenu.jsp"></jsp:include>
-	<a href="${pageContext.request.contextPath}/board/boardList">게시판</a>
+	<main id="main" class="main">
+		<section class="section">
+			<div class="row">
+				<div class="card">
+					<div class="card-body pt-3">
+						<!-- Oracle을 사용하여 MVC 패턴의 게시판 만들기  -->
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	
+
 	
 	 <!-- 프로젝트 이유 : 오라클을 사용한 간단한 프로젝트를 만듦, -->
+<script src="${pageContext.request.contextPath}/resources/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vendor/chart.js/chart.umd.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vendor/echarts/echarts.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vendor/quill/quill.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vendor/tinymce/tinymce.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vendor/php-email-form/validate.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P7JSYB1CSP"></script>
+<script>if( window.self == window.top ) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-P7JSYB1CSP'); }</script>
+<svg id="SvgjsSvg1154" width="2" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev" style="overflow: hidden; top: -100%; left: -100%; position: absolute; opacity: 0;"><defs id="SvgjsDefs1155"></defs><polyline id="SvgjsPolyline1156" points="0,0"></polyline><path id="SvgjsPath1157" d="M-1 270.2L-1 270.2C-1 270.2 99.609375 270.2 99.609375 270.2C99.609375 270.2 166.015625 270.2 166.015625 270.2C166.015625 270.2 232.42187500000003 270.2 232.42187500000003 270.2C232.42187500000003 270.2 298.828125 270.2 298.828125 270.2C298.828125 270.2 365.234375 270.2 365.234375 270.2C365.234375 270.2 431.640625 270.2 431.640625 270.2C431.640625 270.2 431.640625 270.2 431.640625 270.2 "></path></svg> 
 </body>
 </html>

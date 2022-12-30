@@ -31,6 +31,6 @@ public class MemberOneController extends HttpServlet {
 		Member member = memberService.memberOne(memberId);
 		
 		request.setAttribute("m", member); // view페이지와 공유할 모델데이터 세팅
-		request.getRequestDispatcher("/WEB-INF/view/member/memberOne.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/member/profile.jsp").forward(request, response);
 	}
 }

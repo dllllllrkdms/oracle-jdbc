@@ -10,7 +10,7 @@ import vo.Board;
 
 public class BoardService {
 	private BoardDao boardDao;
-	public ArrayList<Board> getBoardListByPage(String search, int currentPage, int rowPerPage) { // 로직은 model에 작성
+	public ArrayList<Board> getBoardListByPage(String memberId, String search, int currentPage, int rowPerPage) { // 로직은 model에 작성
 		ArrayList<Board> list = null;
 		Connection conn = null;
 		try {
@@ -18,9 +18,12 @@ public class BoardService {
 			// 페이징
 			int beginRow = (currentPage-1)*rowPerPage + 1;
 			int endRow = currentPage*rowPerPage;
+			if(memberId==null) {
+				memberId = "%%";
+			}
 			conn = DBUtil.getConnection(); // db연결
 			this.boardDao = new BoardDao();
-			list = boardDao.selectBoardListByPage(conn, search, beginRow, endRow); 
+			list = boardDao.selectBoardListByPage(conn, memberId, search, beginRow, endRow); 
 			conn.commit(); // DBUtil.class에서 conn.setAutoCommit(false) 설정
 		} catch (Exception e) {
 			try {
@@ -38,15 +41,17 @@ public class BoardService {
 		}
 		return list;
 	}
-	public int getBoardListLastPage(String search, int rowPerPage) { // 마지막 페이지 구하기 
+	public int getBoardListLastPage(String memberId, String search, int rowPerPage) { // 마지막 페이지 구하기 
 		int lastPage = 0;
 		Connection conn = null;
 		try {
-			System.out.println(search);
+			if(memberId==null) {
+				memberId = "%%";
+			}
 			// 페이징
 			conn = DBUtil.getConnection(); // db연결
 			this.boardDao = new BoardDao();
-			int count = boardDao.selectBoardCount(conn, search);
+			int count = boardDao.selectBoardCount(conn, memberId, search);
 			System.out.println(count);
 			lastPage = count/rowPerPage;
 			if(count%rowPerPage!=0) {

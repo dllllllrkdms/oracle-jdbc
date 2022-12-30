@@ -26,7 +26,7 @@ public class ModifyMemberController extends HttpServlet {
 		MemberService memberService = new MemberService();
 		Member member = memberService.memberOne(memberId);
 		request.setAttribute("m", member); // view페이지와 공유할 모델데이터 저장
-		request.getRequestDispatcher("/WEB-INF/view/member/modifyMember.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/view/member/profile.jsp").forward(request, response);
 	}
 	// member 수정 액션
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -49,6 +49,7 @@ public class ModifyMemberController extends HttpServlet {
 		System.out.println(row+"<--/ModifyMemberController row");
 		String redirectUrl = "/member/modifyMember";
 		if(row==1) { // 수정 성공
+			loginMember.setMemberName(memberName);
 			redirectUrl = "/member/memberOne";
 		}
 		response.sendRedirect(request.getContextPath()+redirectUrl);
