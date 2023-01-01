@@ -76,6 +76,17 @@ public class MemberDao {
 		stmt.close();
 		return row;
 	}
+	public int updateMemberPw(Connection conn, Member member) throws SQLException { // 비밀번호 변경
+		int row = 0;
+		PreparedStatement stmt = null;
+		String sql = "UPDATE member SET member_pw=? WHERE member_id=?";
+		stmt = conn.prepareStatement(sql);
+		stmt.setString(1, member.getMemberPw());
+		stmt.setString(2, member.getMemberId());
+		row = stmt.executeUpdate();
+		stmt.close();
+		return row;
+	}
 	public int deleteMember(Connection conn, Member member) throws SQLException { // 회원탈퇴
 		int row = 0;
 		PreparedStatement stmt = null;

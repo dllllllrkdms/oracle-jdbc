@@ -48,7 +48,7 @@
 					<li class="breadcrumb-item">
 						<a href="${pageContext.request.contextPath}/board/boardList">전체글보기</a>
 					</li>
-					<c:if test="${memberId!=null}">
+					<c:if test="${memberId!=null && memberId ne ''}">
 						<li class="breadcrumb-item">
 							${memberId}의 게시글
 						</li>
@@ -95,7 +95,7 @@
 											<th scope="col" style="width: 9.25926%;">
 												#
 											</th>
-											<th scope="col" style="width: 30.2346%;">
+											<th scope="col" style="width: 50.2346%;">
 												제목
 											</th>
 											<th scope="col" style="width: 20.9383%;">
@@ -103,12 +103,6 @@
 											</th>
 											<th scope="col" style="width: 20.9383%;">
 												작성일
-											</th>
-											<th scope="col" style="width: 10.4321%;">
-												수정
-											</th>
-											<th scope="col" style="width: 10.1358%;">
-												삭제
 											</th>
 										</tr>
 									</thead>
@@ -120,14 +114,6 @@
 												<td><a href="${pageContext.request.contextPath}/board/boardOne?boardNo=${b.boardNo}">${b.boardTitle}</a></td>
 												<td><a href="${pageContext.request.contextPath}/board/boardList?memberId=${b.memberId}">${b.memberId}</a></td>
 												<td>${b.createdate}</td>
-												<c:if test="${b.memberId eq loginMember.memberId}"> <!-- eq : jstl 문자열비교(같으면 true) -->
-													<td><a href="${pageContext.request.contextPath}/board/modifyBoard?boardNo=${b.boardNo}">수정</a></td>
-													<td><a id="deleteBoardBtn" href="${pageContext.request.contextPath}/board/removeBoard?boardNo=${b.boardNo}">삭제</a></td>
-												</c:if>
-												<c:if test="${b.memberId ne loginMember.memberId}"> <!-- ne : jstl 문자열비교(다르면 true) -->
-													<td>&nbsp;</td>
-													<td>&nbsp;</td>
-												</c:if>
 											</tr>
 										</c:forEach>
 									</tbody>

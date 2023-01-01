@@ -14,8 +14,20 @@ import vo.Member;
 
 @WebServlet("/member/removeMember")
 public class RemoveMemberController extends HttpServlet {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 로그인 후 
+		HttpSession session = request.getSession(); // 세션 값 가져오기
+		Member loginMember = (Member)session.getAttribute("loginMember"); // Object -> Member 형변환
+		if(loginMember==null) {
+			response.sendRedirect(request.getContextPath()+"/member/login");
+			return;
+		}
+		String memberId = loginMember.getMemberId();
+		request.setAttribute("memberId", memberId);
+		request.getRequestDispatcher("/WEB-INF/view/member/removeMember.jsp").forward(request, response); 
+	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 로그인 후 게시글 작성가능
+		// 로그인 후 
 		HttpSession session = request.getSession(); // 세션 값 가져오기
 		Member loginMember = (Member)session.getAttribute("loginMember"); // Object -> Member 형변환
 		if(loginMember==null) {

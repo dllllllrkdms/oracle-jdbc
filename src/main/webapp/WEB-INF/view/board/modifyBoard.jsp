@@ -43,6 +43,13 @@
 			<div class="pagetitle">
 				<h1>게시판</h1>
 			</div>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<a href="${pageContext.request.contextPath}/board/boardList">전체글보기</a>
+					</li>
+				</ol>
+			</nav>
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="card">

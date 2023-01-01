@@ -43,6 +43,13 @@
 			<div class="pagetitle">
 				<h1>게시판</h1>
 			</div>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<a href="${pageContext.request.contextPath}/board/boardList">전체글보기</a>
+					</li>
+				</ol>
+			</nav>
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="card">
@@ -56,7 +63,7 @@
 									<textarea placeholder="내용" class="form-control" cols="50" rows="5" name="boardContent" id="boardContent"></textarea>
 								</div>
 								<div class="text-center mt-3">
-									<button type="button" class="btn btn-primary" id="submitBtn">제출</button>
+									<button type="button" class="btn btn-primary" id="submitBtn">등록</button>
 								</div>
 							</form>
 							

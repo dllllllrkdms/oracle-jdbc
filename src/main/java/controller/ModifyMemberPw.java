@@ -11,9 +11,9 @@ import javax.servlet.http.HttpSession;
 import service.MemberService;
 import vo.Member;
 
-@WebServlet("/member/modifyMember")
-public class ModifyMemberController extends HttpServlet {
-	// member 수정 액션
+
+@WebServlet("/member/modifyMemberPw")
+public class ModifyMemberPw extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 로그인 후 진입 가능
 		HttpSession session = request.getSession(); // 세션 값 가져오기
@@ -24,19 +24,14 @@ public class ModifyMemberController extends HttpServlet {
 		}
 		
 		request.setCharacterEncoding("UTF-8"); // 인코딩
-		String memberName = request.getParameter("memberName");
+		String memberPw = request.getParameter("newMemberPw");
 		String memberId = request.getParameter("memberId");
 		Member member = new Member();
-		member.setMemberName(memberName);
 		member.setMemberId(memberId);
+		member.setMemberPw(memberPw);
 		MemberService memberService = new MemberService();
-		int row = memberService.modifyMember(member);
-		System.out.println(row+"<--/ModifyMemberController row");
-		String redirectUrl = "/member/modifyMember";
-		if(row==1) { // 수정 성공
-			loginMember.setMemberName(memberName);
-			redirectUrl = "/member/memberOne";
-		}
-		response.sendRedirect(request.getContextPath()+redirectUrl);
+		int row = memberService.modifyMemberPw(member);
+		System.out.println(row+"<--modifyMemberPw row");
+		response.sendRedirect(request.getContextPath()+"/member/memberOne");
 	}
 }

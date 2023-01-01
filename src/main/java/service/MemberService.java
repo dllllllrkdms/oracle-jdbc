@@ -129,6 +129,30 @@ public class MemberService {
 		}
 		return row;
 	}
+	public int modifyMemberPw(Member member) { // 비밀번호 변경
+		int row = 0;
+		Connection conn = null;
+		try {
+			conn = DBUtil.getConnection();
+			this.memberDao = new MemberDao();
+			row = memberDao.updateMemberPw(conn, member);
+			conn.commit();
+		} catch (Exception e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return row;
+	}
 	public int removeMember(Member member) { // 회원탈퇴
 		int row = 0;
 		Connection conn = null;

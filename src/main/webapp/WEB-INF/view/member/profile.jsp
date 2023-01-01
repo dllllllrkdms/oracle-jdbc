@@ -19,13 +19,39 @@
 <title>profile</title>
 <script>
 	$(document).ready(function(){
-		$('#submitBtn').click(function(){
+		$('#newMemberPw').focusin(function(){
+			$('#pwMsg').text('4자이상 입력하세요.');
+		});
+		$('#newMemberPw').blur(function(){
+			if($('#newMemberPw').val().length>=4){
+				$('#pwMsg').text('');
+			}
+		});
+		$('#modifyMemberBtn').click(function(){
 			if($('#memberName').val().length==0){
 				alert('이름을 입력해주세요.');
 				$('#memberName').focus();
 				return;
 			}
 			$('#modifyMemberForm').submit();
+		});
+		$('#modifyMemberPwBtn').click(function(){
+			if($('#memberPw').val().length==0){
+				alert('비밀번호를 입력해주세요.');
+				$('#memberPw').focus();
+				return;
+			}
+			if($('#newMemberPw').val().length<4){
+				alert('새 비밀번호를 입력해주세요.');
+				$('#newMemberPw').focus();
+				return;
+			}
+			if($('#newMemberPwCheck').val()!=$('#newMemberPw').val()){
+				alert('새 비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+				$('#newMemberPw').focus();
+				return;
+			}
+			$('#modifyMemberPwForm').submit();
 		});
 	});
 </script>
@@ -69,6 +95,7 @@
 									</button>
 								</li>
 							</ul>
+							
 							<div class="tab-content pt-2">
 								<div class="tab-pane fade profile-overview show active" id="profile-overview" role="tabpanel">
 									<h5 class="card-title">Profile Detailes</h5>
@@ -84,32 +111,58 @@
 										<div class="col-lg-3 col-md-4 label">가입일</div>
 										<div class="col-lg-9 col-md-8">${m.createdate}</div>
 									</div>
+									<div><a href="${pageContext.request.contextPath}/member/removeMember">회원탈퇴</a></div>
 								</div>
-							</div>
-							<div class="tab-pane fade profile-overview" id="profile-edit" role="tabpanel">
-								<form action="${pageContext.request.contextPath}/member/modifyMember" method="post" id="modifyMemberForm">
-									<div class="row mb-3">
-										<label for="memberName" class="col-md-4 col-lg-3 col-form-label">Name</label>
-										<div class="col-md-8 col-lg-9">
-											<input type="text" class="form-control" id="memberName" name="memberName" value="${m.memberName}">
-										</div>
-									</div>
-									<div class="row mb-3">
-										<label for="memberId" class="col-md-4 col-lg-3 col-form-label">ID</label>
-										<div class="col-md-8 col-lg-9">
-											<input type="text" class="form-control" id="memberId" name="memberId" value="${m.memberId}" readonly="readonly">
-										</div>
-									</div>
-									<div class="text-center">
-										<button type="button" class="btn btn-primary" id="submitBtn">수정</button>
-									</div>
-								</form>
-							</div>
 							
-							<!-- 비밀번호 변경 -->
-							<div class="tab-pane fade profile-overview" id="profile-overview" role="tabpanel">
-							</div>
-							
+								<div class="tab-pane fade profile-edit" id="profile-edit" role="tabpanel">
+									<form action="${pageContext.request.contextPath}/member/modifyMember" method="post" id="modifyMemberForm">
+										<div class="row mb-3">
+											<label for="memberName" class="col-md-4 col-lg-3 col-form-label">Name</label>
+											<div class="col-md-8 col-lg-9">
+												<input type="text" class="form-control" id="memberName" name="memberName" value="${m.memberName}">
+											</div>
+										</div>
+										<div class="row mb-3">
+											<label for="memberId" class="col-md-4 col-lg-3 col-form-label">ID</label>
+											<div class="col-md-8 col-lg-9">
+												<input type="text" class="form-control" id="memberId" name="memberId" value="${m.memberId}" readonly="readonly">
+											</div>
+										</div>
+										<div class="text-center">
+											<button type="button" class="btn btn-primary" id="modifyMemberBtn">수정</button>
+										</div>
+									</form>
+								</div>
+								
+								<!-- 비밀번호 변경 -->
+								<div class="tab-pane fade" id="profile-change-password" role="tabpanel">
+									<form action="${pageContext.request.contextPath}/member/modifyMemberPw" method="post" id="modifyMemberPwForm">
+										<input type="hidden" name="memberId" value="${m.memberId}">
+										<div class="row mb-3">
+											<label for="memberPw" class="col-md-4 col-lg-3 col-form-label">현재 비밀번호</label>
+											<div class="col-md-8 col-lg-9">
+												<input type="password" class="form-control" id="memberPw" name="memberPw">
+											</div>
+										</div>
+										<div class="row mb-3">
+											<label for="newMemberPw" class="col-md-4 col-lg-3 col-form-label">새 비밀번호</label>
+											<div class="col-md-8 col-lg-9">
+												<input type="password" class="form-control" id="newMemberPw" name="newMemberPw">
+												<div id="pwMsg"></div>
+											</div>
+										</div>
+										<div class="row mb-3">
+											<label for="newMemberPwCheck" class="col-md-4 col-lg-3 col-form-label">비밀번호 확인</label>
+											<div class="col-md-8 col-lg-9">
+												<input type="password" class="form-control" id="newMemberPwCheck" name="newMemberPwCheck">
+											</div>
+										</div>
+										<div class="text-center">
+											<button type="button" class="btn btn-primary" id="modifyMemberPwBtn">수정</button>
+										</div>
+									</form>
+								</div>
+							</div>							
 						</div>
 					</div>
 				</div>

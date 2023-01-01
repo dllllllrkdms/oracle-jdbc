@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> <!-- Core JSTL 사용 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,80 +16,63 @@
 <link href="${pageContext.request.contextPath}/resources/vendor/simple-datatables/style.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<title>boardOne</title>
+<title>removeMember</title>
 <script>
 	$(document).ready(function(){
-		$('#deleteBoardBtn').click(function(){
-			let alert = confirm('삭제하시겠습니까?');
-			if(alert==true){
-				return true;
+		$('#submitBtn').click(function(){
+			if($('#check:checked').length==0){
+				alert('탈퇴안내를 확인하세요.');
+				return;
 			}
-			if(alert==false){
-				return false;
+			if($('#memberPw').val().length==0){
+				alert('비밀번호를 입력해주세요.');
+				$('#memberPw').focus();
+				return;
 			}
-		}); 
+			$('#removeMemberForm').submit();
+		});
 	});
 </script>
 </head>
 <body>
-<!-- header -->
+	<!-- header -->
 	<jsp:include page="../../inc/userMenu.jsp"></jsp:include>
 	<main id="main" class="main">
 		<section class="section">
 			<div class="pagetitle">
-				<h1>게시판</h1>
+				<h1>회원 탈퇴</h1>
 			</div>
-			<nav>
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item">
-						<a href="${pageContext.request.contextPath}/board/boardList">전체글보기</a>
-					</li>
-				</ol>
-			</nav>
-			<div class="row">
-				<div class="col-lg-12">
-					<c:if test="${b.memberId eq loginMember.memberId}"> <!-- eq : jstl 문자열비교(같으면 true) -->
-						<a class="btn btn-sm btn-light" href="${pageContext.request.contextPath}/board/modifyBoard?boardNo=${b.boardNo}">수정</a>
-						<a class="btn btn-sm btn-light" id="deleteBoardBtn" href="${pageContext.request.contextPath}/board/removeBoard?boardNo=${b.boardNo}">삭제</a>
-					</c:if>
-					<div class="card">
-						<div class="card-body px-lg-5">
-							<div class="pt-lg-5 pb-2 pb-2">
-								<h4 class="card-title">
-										${b.boardTitle}
-								</h4>
-							</div>
-							<div class="row">
-								<div class="pt-2 pb-2">
-									${b.boardContent}
+			<div class="mt-3">
+				<div class="alert alert-warning alert-dismissible" role="alert">
+					<h4 class="alert-heading">탈퇴 안내</h4>
+						<p>자식테이블 값이 없어야 부모테이블 삭제가능 --> board게시글이 없어야 회원 탈퇴가능</p>
+					<form action="${pageContext.request.contextPath}/member/removeMember" id="removeMemberForm" method="post">
+						<input type="hidden" name="memberId" value="${memberId}">
+						<hr>
+							<input type="checkbox" id="check">
+							<label for="check">안내사항을 확인하였습니다.</label>
+							<div class="row mb-3">
+								<label for="memberPw" class="col-md-4 col-lg-3 col-form-label">비밀번호 확인</label>
+								<div class="col-md-8 col-lg-9">
+									<input type="password" class="form-control" id="memberPw" name="memberPw">
 								</div>
 							</div>
-							<div class="card-footer">
-								<div class="mt-3 mb-3">
-									${b.memberId} &nbsp; ${b.createdate}
-								</div>
+							<div class="text-center">
+								<button type="button" class="btn btn-primary" id="submitBtn">확인</button>
 							</div>
-						</div>
-					</div>
-					<a href="${pageContext.request.contextPath}/board/addBoard" class="btn btn-sm btn-light">글쓰기</a>
-					<c:if test="${b.memberId eq loginMember.memberId}"> <!-- eq : jstl 문자열비교(같으면 true) -->
-						<a class="btn btn-sm btn-light" href="${pageContext.request.contextPath}/board/modifyBoard?boardNo=${b.boardNo}">수정</a>
-						<a class="btn btn-sm btn-light" id="deleteBoardBtn" href="${pageContext.request.contextPath}/board/removeBoard?boardNo=${b.boardNo}">삭제</a>
-					</c:if>
+					</form>
 				</div>
 			</div>
 		</section>
 	</main>
-			
-	
-	
-	<!-- footer 삭제 X -->
-	<footer id="footer" class="footer">
-		<div class="copyright"> © Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved</div>
-		<div class="credits"> Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a></div>
-	</footer>
-	<a href="#" class="back-to-top d-flex align-items-center justify-content-center active"><i class="bi bi-arrow-up-short"></i></a>
-	
+		
+		<!-- footer 삭제 X -->
+		<footer id="footer" class="footer">
+			<div class="copyright"> © Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved</div>
+			<div class="credits"> Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a></div>
+		</footer>
+		<a href="#" class="back-to-top d-flex align-items-center justify-content-center active"><i class="bi bi-arrow-up-short"></i></a>
+		
 <script src="${pageContext.request.contextPath}/resources/vendor/apexcharts/apexcharts.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/vendor/chart.js/chart.umd.js"></script>

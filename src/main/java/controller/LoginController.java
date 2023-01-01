@@ -52,7 +52,7 @@ public class LoginController extends HttpServlet {
 		
 		MemberService memberService = new MemberService();
 		loginMember = memberService.login(member);
-		System.out.println(loginMember.getMemberId()+"<--/LoginController loginMember.getMemberId()"); // 모델호출 후 디버깅
+		System.out.println(loginMember+"<--/LoginController loginMember"); // 모델호출 후 디버깅
 		String redirectUrl = "/member/login";
 		if(loginMember!=null) { // loginMember가 null이면 로그인 실패 
 			redirectUrl = "/home";

@@ -18,7 +18,7 @@ public class BoardService {
 			// 페이징
 			int beginRow = (currentPage-1)*rowPerPage + 1;
 			int endRow = currentPage*rowPerPage;
-			if(memberId==null) {
+			if(memberId==null||memberId.equals("")) {
 				memberId = "%%";
 			}
 			conn = DBUtil.getConnection(); // db연결
@@ -45,7 +45,7 @@ public class BoardService {
 		int lastPage = 0;
 		Connection conn = null;
 		try {
-			if(memberId==null) {
+			if(memberId==null||memberId.equals("")) {
 				memberId = "%%";
 			}
 			// 페이징
