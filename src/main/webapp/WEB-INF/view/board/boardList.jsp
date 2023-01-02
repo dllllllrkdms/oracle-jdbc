@@ -4,19 +4,27 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<link href="${pageContext.request.contextPath}/resources/img/favicon.png" rel="icon">
-<link href="https://fonts.gstatic.com" rel="preconnect">
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/vendor/quill/quill.snow.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/vendor/quill/quill.bubble.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/vendor/remixicon/remixicon.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/vendor/simple-datatables/style.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- css -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sandstone/bootstrap.css">
+<!-- jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<!-- script -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Global Site Tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23019901-1"></script>
+<!-- icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<!-- custom css -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/style.css">
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-23019901-1');
+</script>
+
 <title>boardList</title>
 <script>
 	$(document).ready(function(){
@@ -38,10 +46,9 @@
 <body>
 	<!-- header -->
 	<jsp:include page="../../inc/userMenu.jsp"></jsp:include>
-	<main id="main" class="main">
-		<section class="section">
-			<div class="pagetitle">
-				<h1>게시판</h1>
+	<div class="container">
+			<div class="col-lg-6">
+				<h2>게시판</h2>
 			</div>
 			<nav>
 				<ol class="breadcrumb">
@@ -61,13 +68,13 @@
 					<div class="card">
 						<div class="card-body mt-3">
 							
-							<div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-								<div class="dataTable-top">
-									<div class="dataTable-dropdown">
-										<form action="${pageContext.request.contextPath}/board/boardList" id="pageForm">
+							<div class="">
+								<div class="row">
+									<div class="col-2">
+										<form action="${pageContext.request.contextPath}/board/boardList" class="d-flex align-items-center" id="pageForm">
 											<input type="hidden" value="${memberId}" name="memberId">
 											<input type="hidden" value="${search}" name="search">
-											<select class="dataTable-selector" name="rowPerPage" id="rowPerPage">
+											<select class="form-select me-sm-2" name="rowPerPage" id="rowPerPage">
 												<c:forEach var="v" begin="10" end="30" step="10">
 													<c:if test="${rowPerPage eq v}">
 														<option value="${v}" selected="selected">${v}개씩</option>
@@ -80,16 +87,16 @@
 										</form>
 									</div>
 									<!-- 검색창 -->
-									<div class="search-bar">
-										<form action="${pageContext.request.contextPath}/board/boardList" class="search-form d-flex align-items-center">
-											<input class="dataTable-input" placeholder="제목 검색" type="text" name="search" title="Enter search keyword" value="${search}">
-											<button type="submit" title="Search" class="btn btn-secondary"><i class="bi bi-search"></i></button>
+									<div class="col-lg-4 mb-3">
+										<form action="${pageContext.request.contextPath}/board/boardList" class="d-flex align-items-center">
+											<input class="form-control me-sm-2" placeholder="제목 검색" type="search" name="search" value="${search}">
+											<button type="submit" class="btn btn-secondary my-2 my-sm-0"><i class="bi bi-search"></i></button>
 										</form>
 									</div>
 								</div>
 							</div>
-							<div class="dataTable-container">
-								<table class="table datatable dataTable-table">
+							<div class="">
+								<table class="table">
 									<thead class="table-primary">
 										<tr>
 											<th scope="col" style="width: 9.25926%;">
@@ -125,7 +132,7 @@
 									<ul class="pagination justify-content-center">
 										<c:if test="${beginPage>1}">
 											<li class="page-item">
-												<a class="page-link" href="${pageContext.request.contextPath}/board/boardList?currentPage=${beginPage-1}&search=${search}&rowPerPage=${rowPerPage}&memberId=${memberId}"><i class="bi bi-chevron-double-left"></i></a>
+												<a class="page-link" href="${pageContext.request.contextPath}/board/boardList?currentPage=${beginPage-1}&search=${search}&rowPerPage=${rowPerPage}&memberId=${memberId}">&laquo;</a>
 											</li>
 										</c:if>
 										<c:forEach var="p" begin="${beginPage}" end="${endPage}" step="1">
@@ -142,7 +149,7 @@
 										</c:forEach>
 										<c:if test="${endPage<lastPage}">
 											<li class="page-item">
-												<a class="page-link" href="${pageContext.request.contextPath}/board/boardList?currentPage=${beginPage+10}&search=${search}&rowPerPage=${rowPerPage}&memberId=${memberId}"><i class="bi bi-chevron-double-right"></i></a>
+												<a class="page-link" href="${pageContext.request.contextPath}/board/boardList?currentPage=${beginPage+10}&search=${search}&rowPerPage=${rowPerPage}&memberId=${memberId}">&raquo;</a>
 											</li>
 										</c:if>
 									</ul>
@@ -155,26 +162,7 @@
 					</div>
 				</div>
 			</div>
-		</section>
-	</main>
-	<!-- footer 삭제 X -->
-	<footer id="footer" class="footer">
-		<div class="copyright"> © Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved</div>
-		<div class="credits"> Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a></div>
-	</footer>
-	<a href="#" class="back-to-top d-flex align-items-center justify-content-center active"><i class="bi bi-arrow-up-short"></i></a>
+		</div>
 	
-<script src="${pageContext.request.contextPath}/resources/vendor/apexcharts/apexcharts.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vendor/chart.js/chart.umd.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vendor/echarts/echarts.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vendor/quill/quill.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vendor/simple-datatables/simple-datatables.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vendor/tinymce/tinymce.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vendor/php-email-form/validate.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-P7JSYB1CSP"></script>
-<script>if( window.self == window.top ) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-P7JSYB1CSP'); }</script>
-<svg id="SvgjsSvg1154" width="2" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev" style="overflow: hidden; top: -100%; left: -100%; position: absolute; opacity: 0;"><defs id="SvgjsDefs1155"></defs><polyline id="SvgjsPolyline1156" points="0,0"></polyline><path id="SvgjsPath1157" d="M-1 270.2L-1 270.2C-1 270.2 99.609375 270.2 99.609375 270.2C99.609375 270.2 166.015625 270.2 166.015625 270.2C166.015625 270.2 232.42187500000003 270.2 232.42187500000003 270.2C232.42187500000003 270.2 298.828125 270.2 298.828125 270.2C298.828125 270.2 365.234375 270.2 365.234375 270.2C365.234375 270.2 431.640625 270.2 431.640625 270.2C431.640625 270.2 431.640625 270.2 431.640625 270.2 "></path></svg>
 </body>
 </html>

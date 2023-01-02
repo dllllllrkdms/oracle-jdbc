@@ -4,19 +4,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="https://bootstrapmade.com/assets/css/demo-4.2.css">
-<link href="${pageContext.request.contextPath}/resources/img/favicon.png" rel="icon">
-<link href="https://fonts.gstatic.com" rel="preconnect">
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/vendor/quill/quill.snow.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/vendor/quill/quill.bubble.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/vendor/remixicon/remixicon.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/vendor/simple-datatables/style.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- css -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/sandstone/bootstrap.css">
+<!-- jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<!-- script -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Global Site Tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23019901-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-23019901-1');
+</script>
+
 <title>addMember</title>
 <script>
 	$(document).ready(function(){
@@ -62,9 +66,8 @@
 </script>
 </head>
 <body>
-	<main>
 		<div class="container">
-			<section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+			<div class="register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
 				<div class="container">
 					<div class="row justify-content-center">
 						<div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
@@ -104,24 +107,19 @@
 											<label for="memberPw" class="form-label">confirm password</label>
 											<input type="password" name="checkPw" class="form-control" id="checkPw">
 										</div>
-										<div>
+										<div class="col-12 mt-3">
 											<button class="btn btn-primary w-100" type="button" id="submitBtn">회원가입</button>
 										</div>
-										<div class="col-12">
+										<div class="col-12 mt-1">
 											<p class="small mb-0">이미 회원이라면 ? <a href="${pageContext.request.contextPath}/member/login"> 로그인</a></p>
 										</div>
 									</form>
 								</div>
 							</div>
-							<div class="credits"> Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a></div>
 						</div>
 					</div>
 				</div>
-			</section>
+			</div>
 		</div>
-	</main>
-<script src="https://bootstrapmade.com/assets/js/demo-4.2.js"></script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-P7JSYB1CSP"></script>
-<script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-P7JSYB1CSP');</script>
 </body>
 </html>
