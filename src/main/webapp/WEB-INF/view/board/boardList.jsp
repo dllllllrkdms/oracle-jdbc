@@ -47,52 +47,39 @@
 	<!-- header -->
 	<jsp:include page="../../inc/userMenu.jsp"></jsp:include>
 	<div class="container">
-			<div class="col-lg-6">
-				<h2>게시판</h2>
-			</div>
-			<nav>
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item">
-						<a href="${pageContext.request.contextPath}/board/boardList">전체글보기</a>
-					</li>
-					<c:if test="${memberId!=null && memberId ne ''}">
-						<li class="breadcrumb-item">
-							${memberId}의 게시글
-						</li>
-					</c:if>
-				</ol>
-			</nav>
 			<div class="row">
 				<div class="col-lg-12">
 					
 					<div class="card">
-						<div class="card-body mt-3">
-							
-							<div class="">
-								<div class="row">
-									<div class="col-2">
-										<form action="${pageContext.request.contextPath}/board/boardList" class="d-flex align-items-center" id="pageForm">
-											<input type="hidden" value="${memberId}" name="memberId">
-											<input type="hidden" value="${search}" name="search">
-											<select class="form-select me-sm-2" name="rowPerPage" id="rowPerPage">
-												<c:forEach var="v" begin="10" end="30" step="10">
-													<c:if test="${rowPerPage eq v}">
-														<option value="${v}" selected="selected">${v}개씩</option>
-													</c:if>
-													<c:if test="${rowPerPage ne v}">
-														<option value="${v}">${v}개씩</option>
-													</c:if>
-												</c:forEach>
-											</select>
-										</form>
-									</div>
-									<!-- 검색창 -->
-									<div class="col-lg-4 mb-3">
-										<form action="${pageContext.request.contextPath}/board/boardList" class="d-flex align-items-center">
-											<input class="form-control me-sm-2" placeholder="제목 검색" type="search" name="search" value="${search}">
-											<button type="submit" class="btn btn-secondary my-2 my-sm-0"><i class="bi bi-search"></i></button>
-										</form>
-									</div>
+						<c:if test="${memberId!=null && memberId ne ''}">
+							<strong class="card-header">
+								${memberId}의 게시글
+							</strong>
+						</c:if>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-2">
+									<form action="${pageContext.request.contextPath}/board/boardList" class="d-flex align-items-center" id="pageForm">
+										<input type="hidden" value="${memberId}" name="memberId">
+										<input type="hidden" value="${search}" name="search">
+										<select class="form-select me-sm-2" name="rowPerPage" id="rowPerPage">
+											<c:forEach var="v" begin="10" end="30" step="10">
+												<c:if test="${rowPerPage eq v}">
+													<option value="${v}" selected="selected">${v}개씩</option>
+												</c:if>
+												<c:if test="${rowPerPage ne v}">
+													<option value="${v}">${v}개씩</option>
+												</c:if>
+											</c:forEach>
+										</select>
+									</form>
+								</div>
+								<!-- 검색창 -->
+								<div class="col-lg-4 mb-3 float-end">
+									<form action="${pageContext.request.contextPath}/board/boardList" class="d-flex align-items-center">
+										<input class="form-control me-sm-2" placeholder="제목 검색" type="search" name="search" value="${search}">
+										<button type="submit" class="btn btn-secondary my-2 my-sm-0"><i class="bi bi-search"></i></button>
+									</form>
 								</div>
 							</div>
 							<div class="">
@@ -119,7 +106,13 @@
 											<tr>
 												<th>${b.boardNo}</th>
 												<td><a href="${pageContext.request.contextPath}/board/boardOne?boardNo=${b.boardNo}">${b.boardTitle}</a></td>
-												<td><a href="${pageContext.request.contextPath}/board/boardList?memberId=${b.memberId}">${b.memberId}</a></td>
+												<td>
+													<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">${b.memberId}</a>
+													<div class="dropdown-menu" style="">
+									                    <a class="dropdown-item" href="${pageContext.request.contextPath}/board/boardList?memberId=${b.memberId}">게시글 더보기</a>
+									                </div>
+								                </td>
+												
 												<td>${b.createdate}</td>
 											</tr>
 										</c:forEach>
@@ -155,10 +148,11 @@
 									</ul>
 								</nav>
 							</div>
-							<div class="mt-3">
-								<a href="${pageContext.request.contextPath}/board/addBoard" class="btn btn-sm btn-outline-primary">글쓰기</a>
-							</div>
+							<!-- /페이징 -->
 						</div>
+					</div>
+					<div class="mt-1">
+						<a href="${pageContext.request.contextPath}/board/addBoard" class="btn btn-sm btn-light" target="_blank">글쓰기</a>
 					</div>
 				</div>
 			</div>

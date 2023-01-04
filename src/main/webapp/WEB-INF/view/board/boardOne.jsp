@@ -41,49 +41,44 @@
 <body>
 <!-- header -->
 	<jsp:include page="../../inc/userMenu.jsp"></jsp:include>
-		<div class="container">
-			<div class="col-lg-6">
-				<h1>게시판</h1>
-			</div>
-			<nav>
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item">
-						<a href="${pageContext.request.contextPath}/board/boardList">전체글보기</a>
-					</li>
-				</ol>
-			</nav>
-			<div class="row">
-				<div class="col-lg-12">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="mb-1">
+					<a href="${pageContext.request.contextPath}/board/addBoard" class="btn btn-sm btn-light" target="_blank">글쓰기</a>
 					<c:if test="${b.memberId eq loginMember.memberId}"> <!-- eq : jstl 문자열비교(같으면 true) -->
-						<a class="btn btn-sm btn-light" href="${pageContext.request.contextPath}/board/modifyBoard?boardNo=${b.boardNo}">수정</a>
+						<a class="btn btn-sm btn-light" href="${pageContext.request.contextPath}/board/modifyBoard?boardNo=${b.boardNo}" target="_blank">수정</a>
 						<a class="btn btn-sm btn-light" id="deleteBoardBtn" href="${pageContext.request.contextPath}/board/removeBoard?boardNo=${b.boardNo}">삭제</a>
 					</c:if>
-					<div class="card">
-						<div class="card-body px-lg-5">
-							<div class="pt-lg-5 pb-2 pb-2">
-								<h4 class="card-title">
-										${b.boardTitle}
-								</h4>
-							</div>
-							<div class="row">
-								<div class="pt-2 pb-2">
-									${b.boardContent}
-								</div>
-							</div>
-							<div class="card-footer">
-								<div class="mt-3 mb-3">
-									${b.memberId} &nbsp; ${b.createdate}
-								</div>
-							</div>
-						</div>
-					</div>
-					<a href="${pageContext.request.contextPath}/board/addBoard" class="btn btn-sm btn-light">글쓰기</a>
-					<c:if test="${b.memberId eq loginMember.memberId}"> <!-- eq : jstl 문자열비교(같으면 true) -->
-						<a class="btn btn-sm btn-light" href="${pageContext.request.contextPath}/board/modifyBoard?boardNo=${b.boardNo}">수정</a>
-						<a class="btn btn-sm btn-light" id="deleteBoardBtn" href="${pageContext.request.contextPath}/board/removeBoard?boardNo=${b.boardNo}">삭제</a>
-					</c:if>
+					<a class="btn btn-sm btn-light float-end" href="${pageContext.request.contextPath}/board/boardList">목록</a>
 				</div>
+				<div class="card">
+					<div class="card-body p-lg-5">
+						<h4 class="card-title">
+							${b.boardTitle}
+						</h4>
+						<div class="card-subtitle mb-2 text-muted">
+							<span style="font-size:18px;">${b.memberId}</span> &nbsp; <span style="font-size: 14px">${b.createdate}</span>
+						</div>
+						<p class="card-text">
+							${b.boardContent}
+						</p>
+					</div>
+					<div class="card-footer">
+						<a href="${pageContext.request.contextPath}/board/boardList?memberId=${b.memberId}"><strong>${b.memberId}</strong>님의 게시글 더보기></a>
+					</div>
+				</div>
+				
+				<div class="mt-1">
+					<c:if test="${b.memberId eq loginMember.memberId}"> <!-- eq : jstl 문자열비교(같으면 true) -->
+						<a class="btn btn-sm btn-light" href="${pageContext.request.contextPath}/board/modifyBoard?boardNo=${b.boardNo}" target="_blank">수정</a>
+						<a class="btn btn-sm btn-light" id="deleteBoardBtn" href="${pageContext.request.contextPath}/board/removeBoard?boardNo=${b.boardNo}">삭제</a>
+					</c:if>
+					<a class="btn btn-sm btn-light float-end" href="${pageContext.request.contextPath}/board/boardList">목록</a>
+				</div>
+				
 			</div>
 		</div>
+	</div>
 </body>
 </html>

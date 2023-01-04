@@ -44,44 +44,39 @@
 <body>
 	<!-- header -->
 	<jsp:include page="../../inc/userMenu.jsp"></jsp:include>
-		<div class="container">
-			<div class="col-lg-6">
-				<h1>게시판</h1>
-			</div>
-			<nav>
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item">
-						<a href="${pageContext.request.contextPath}/board/boardList">전체글보기</a>
-					</li>
-				</ol>
-			</nav>
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="card">
-						<div class="card-body px-lg-5">
-	
-							<form action="${pageContext.request.contextPath}/board/modifyBoard" method="post" id="modifyBoardForm">
-								<input type="hidden" name="boardNo" value="${b.boardNo}">
-								<input type="hidden" name="memberId" value="${b.memberId}">
-								<div class="pt-lg-5 pb-2 pb-2">
-									<input placeholder="제목" class="form-control" type="text" name="boardTitle" value="${b.boardTitle}" id="boardTitle">
+	<div class="container">
+		<div class="row">
+		
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-body px-lg-5">
+
+						<form action="${pageContext.request.contextPath}/board/modifyBoard" method="post" id="modifyBoardForm">
+							<input type="hidden" name="boardNo" value="${b.boardNo}">
+							<input type="hidden" name="memberId" value="${b.memberId}">
+							<div class="pt-lg-5 pb-2 pb-2">
+								<input placeholder="제목" class="form-control" type="text" name="boardTitle" value="${b.boardTitle}" id="boardTitle">
+							</div>
+							<div class="pt-2 pb-2">
+								<textarea placeholder="내용" class="form-control" cols="50" rows="5" name="boardContent" id="boardContent">${b.boardContent}</textarea>
+							</div>
+							<div class="card-footer">
+								<div class="mt-3 mb-3">
+									${b.memberId} &nbsp; ${b.createdate}
 								</div>
-								<div class="pt-2 pb-2">
-									<textarea placeholder="내용" class="form-control" cols="50" rows="5" name="boardContent" id="boardContent">${b.boardContent}</textarea>
-								</div>
-								<div class="card-footer">
-									<div class="mt-3 mb-3">
-										${b.memberId} &nbsp; ${b.createdate}
-									</div>
-								</div>
-								<div class="text-center mt-3">
-									<button type="button" class="btn btn-primary" id="submitBtn">등록</button>
-								</div>
-							</form>
-						</div>
+							</div>
+							<div class="text-center mt-3">
+								<button type="button" class="btn btn-primary" id="submitBtn">등록</button>
+							</div>
+						</form>
+						
 					</div>
+				</div>
+				<div class="mt-1">
+					<a href="${pageContext.request.contextPath}/board/addBoard" class="btn btn-sm btn-light" target="_blank">글쓰기</a>
 				</div>
 			</div>
 		</div>
+	</div>
 </body>
 </html>

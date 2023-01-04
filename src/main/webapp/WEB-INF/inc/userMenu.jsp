@@ -1,6 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%><!-- Core JSTL 사용 -->
-
+<head>
+	<script>
+		$(document).ready(function(){
+			
+		
+			let bold = null;
+			$('.nav-link').click(function(){
+				let clickId = $(this).attr('id'); // 클릭한 링크의 id 태그 가져오기
+				console.log(clickId);
+				$(clickId).addClass('active');
+			});
+		});
+			
+	</script>
+</head>
 
 <!-- header -->
 <div class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
@@ -12,10 +26,10 @@
     <div class="collapse navbar-collapse" id="navbarColor03">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link" href="${pageContext.request.contextPath}/home">Home</a>
+          <a class="nav-link" href="${pageContext.request.contextPath}/home" id="home">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="${pageContext.request.contextPath}/board/boardList">Board</a>
+          <a class="nav-link" href="${pageContext.request.contextPath}/board/boardList" id="board">Board</a>
         </li>
       </ul>
       

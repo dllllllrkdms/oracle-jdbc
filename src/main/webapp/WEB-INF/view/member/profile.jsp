@@ -66,19 +66,6 @@
 	<!-- header -->
 	<jsp:include page="../../inc/userMenu.jsp"></jsp:include>
 		<div class="container">
-			<div class="col-lg-6">
-				<h1>Profile</h1>
-				<nav>
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item">
-							<a href="${pageContext.request.contextPath}/home">Home</a>
-						</li>
-						<li class="breadcrumb-item">
-							내 정보
-						</li>
-					</ol>
-				</nav>
-			</div>
 			<div class="row">
 				<div class="col-xl-12">
 					<div class="card">
@@ -103,7 +90,6 @@
 							
 							<div class="tab-content pt-2">
 								<div class="tab-pane fade show active" id="profile-overview" role="tabpanel">
-									<h5 class="card-title">Profile Detailes</h5>
 									<div class="row">
 										<div class="col-lg-3 col-md-4 label">이름</div>
 										<div class="col-lg-9 col-md-8">${m.memberName}</div>
